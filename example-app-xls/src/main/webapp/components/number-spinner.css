@@ -1,0 +1,25 @@
+
+.ns-plus {
+  position: absolute;
+  text-align: center;
+  line-height: 16px;
+  top: 0;
+  right: 0;
+  height: 16px;
+  display: block;
+  border-left: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  width: 16px;
+}
+
+.ns-minus {
+  position: absolute;
+  text-align: center;
+  display: block;
+  line-height: 16px;
+  height: 16px;
+  border-left: 1px solid #ccc;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+}

@@ -1,0 +1,55 @@
+
+template header
+Group
+QuestionID
+Type
+Title
+Required
+Value
+OnChange
+EnabledIf
+VisibleIf
+Validation
+Choices
+Custom
+Placeholder
+ErrorMessage
+CustomParameter1
+
+package com.redhat.sso.wizard
+import com.redhat.sso.wizard.utils.*
+import com.redhat.sso.wizard.domain.*
+import com.redhat.sso.wizard.impl.*
+
+template "questions"
+
+rule "question_@{row.rowNumber}"
+salience 65000-@{row.rowNumber}
+when
+then
+    insert(
+      new Question(new MapBuilder()
+        .put("QuestionID", "@{QuestionID}")
+        .put("Group", "@{Group}")
+        .put("Type", "@{Type}")
+        .put("Title", "@{Title}")
+        .put("Validation", "@{Validation}")
+        .put("Required", "@{Required}")
+        .put("OnChange", "@{OnChange}")
+        .put("EnabledIf", "@{EnabledIf}")
+        .put("VisibleIf", "@{VisibleIf}")
+        .put("Choices", "@{Choices}")
+        .put("Custom", "@{Custom}")
+        .put("Placeholder", "@{Placeholder}")
+        .put("Value", "@{Value}")
+        .put("ErrorMessage", "@{ErrorMessage}")
+        .put("#", com.redhat.sso.wizard.impl.DefaultQuestionReader.counter+=1)
+        .build()
+      )
+    );
+end
+
+end template
+
+
+

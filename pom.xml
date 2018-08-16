@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<name>${project.groupId}.${project.artifactId}</name>
+	<groupId>com.redhat.sso</groupId>
+	<artifactId>dynamic-wizard</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>model</module>
+		<module>example-app-bc</module>
+		<module>example-app-xls</module>
+		<module>framework</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<id>openshift</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<id>copy-files</id>
+								<phase>package</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target name="copy .war files to deploy folder">
+										<copy file="example-app-bc/target/dynamic-wizard-example-app-bc.war" todir="${project.build.directory}" />
+										<copy file="example-app-xls/target/dynamic-wizard-example-app-xls.war" todir="${project.build.directory}" />
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+     
+			</build>
+		</profile>
+	</profiles>
+	
+</project>
+

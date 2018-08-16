@@ -1,0 +1,15 @@
+package interestRate
+
+import com.redhat.sso.wizard.domain.Question;
+import java.util.*;
+import java.lang.Double;
+
+rule "Interest Rate Calculation"
+when
+  q:Question()
+then
+  int low=1;
+  int high=7;
+  double calculation=new Random().nextInt(high-low)+low;
+  insert((Double)calculation);
+end

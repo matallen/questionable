@@ -1,0 +1,3 @@
+<jboss-web>
+    <context-root>dynamic-ui</context-root>
+</jboss-web>

@@ -1,0 +1,97 @@
+/*Definately Used */
+.error{
+	color: red;
+	font-weight: bold;
+}
+.required{
+	color: red;
+	font-weight: bold;
+}
+.disableButton{color: silver;}
+
+/*no longer used*/
+.container2{
+  width:  100%;
+  height: 100%;
+}
+.bold{
+  font-weight: bold;
+}
+.wrapper{
+	padding:30px;
+}
+.header{
+  border-top-left-radius:     1em;
+  border-top-right-radius:    1em;
+  border-bottom-left-radius:  0em;
+  border-bottom-right-radius: 0em;
+  border: 1px solid #AAAAAA;
+  padding:10px;
+  font-weight: bold;
+  /*
+  background: #DDDDDD;
+  */
+  padding-top:    10px;
+  padding-bottom: 10px;
+  background: linear-gradient(#CDD, #EEE);
+}
+.bar{
+	/*
+  background-color: #EFEFEF;
+  */
+  border-top-left-radius:     0em;
+  border-top-right-radius:    0em;
+  border-bottom-left-radius:  1em;
+  border-bottom-right-radius: 1em;
+  padding:10px;
+  border: 1px solid #AAAAAA;
+  text-align: center;
+  background: linear-gradient(#EEE, #CDD);
+}
+.buttons{
+	width: auto !important;
+	display: inline !important;
+}
+
+/* Unsure whether they're used, need to check  */
+
+.question{
+  background-color: #EFEFEF;
+  border-top-left-radius:     0em;
+  border-top-right-radius:    0em;
+  border-bottom-left-radius:  0em;
+  border-bottom-right-radius: 0em;
+  padding:30px;
+  
+  border-top:    0px solid #AAAAAA;
+  border-bottom: 0px solid #AAAAAA;
+  border-left:   1px solid #AAAAAA;
+  border-right:  1px solid #AAAAAA;
+  
+  font-family: overpass,sans-serif;
+  padding-top:    10px;
+  padding-bottom: 10px;
+}
+.questions{
+  background-color: #EFEFEF;
+  border-top-left-radius:     0em;
+  border-top-right-radius:    0em;
+  border-bottom-left-radius:  1em;
+  border-bottom-right-radius: 1em;
+  padding:10px;
+  
+  border: 1px solid #AAAAAA;
+  border-top: 0;
+
+  border: 2px 2px 2px 2px solid #AAAAAA;
+  font-family: overpass,sans-serif;
+  padding-top:    0px;
+  padding-bottom: 0px;
+}
+
+.half{
+  width: 50%;
+  vertical-align: top;
+  display:inline-block;
+  padding:30px;
+}

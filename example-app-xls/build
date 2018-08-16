@@ -1,0 +1,2 @@
+. ~/bin/java8
+cd ../model; mvn clean install; cd ../framework; mvn clean install -DskipTests; cd ../example-app-xls; mvn clean package -DskipTests jetty:run -Djetty.port=8082

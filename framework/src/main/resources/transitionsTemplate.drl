@@ -1,0 +1,27 @@
+
+template header
+From
+To
+Order
+
+package com.redhat.sso
+import com.redhat.sso.utils.*
+import com.redhat.sso.generator.*
+import com.redhat.sso.generator.domain.*
+
+template "transitions"
+
+rule "transition_@{row.rowNumber}"
+salience 65534-@{row.rowNumber}
+when
+then
+  insert(new Transition(new MapBuilder()
+    .put("From", "@{From}")
+    .put("To", "@{To}")
+    .put("Order", "@{Order}")
+    .build()
+  ));
+end
+
+end template
+
