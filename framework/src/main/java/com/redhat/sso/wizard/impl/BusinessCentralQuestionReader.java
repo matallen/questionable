@@ -27,6 +27,11 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
   public KieSession newKieSession(){
     KieServices ks=KieServices.Factory.get();
     
+    if (null!=System.getenv("KIE_MAVEN_SETTINGS_CUSTOM")){
+      log.debug("Settings 'kie.maven.settings.custom' to '"+System.getenv("KIE_MAVEN_SETTINGS_CUSTOM")+"'");
+      System.setProperty("kie.maven.settings.custom", System.getenv("KIE_MAVEN_SETTINGS_CUSTOM"));
+    }
+    
     log.debug("Initialising kContainer ("+releaseId+")...");
     kContainer=ks.newKieContainer(releaseId);
     KieBase kieBase=kContainer.newKieBase(ks.newKieBaseConfiguration());

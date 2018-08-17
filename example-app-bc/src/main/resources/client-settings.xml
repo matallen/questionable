@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <localRepository>${user.home}/.m2/repository</localRepository>
+  
+  <profiles>
+    <profile>
+      <id>repositories</id>
+      <repositories>
+        <repository>
+          <id>client-remote</id>
+          <name>Client Remote</name>
+          <url>${kie.maven.settings.custom.url}</url>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots> 
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
+  <servers>
+    <server>
+      <id>client-remote</id>
+      <username>${kie.maven.settings.custom.username}</username>
+      <password>${kie.maven.settings.custom.password}</password>
+    </server>
+  </servers>
+
+  <activeProfiles>
+    <activeProfile>repositories</activeProfile>
+  </activeProfiles>
+  
+</settings>
+

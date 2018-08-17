@@ -12,7 +12,7 @@
 		<module>example-app-xls</module>
 		<module>framework</module>
 	</modules>
-
+	
 	<profiles>
 		<profile>
 			<id>openshift</id>
@@ -46,6 +46,5 @@
 			</build>
 		</profile>
 	</profiles>
-	
 </project>
 

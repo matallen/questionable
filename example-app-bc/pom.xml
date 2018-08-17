@@ -17,13 +17,19 @@
 	
 	<properties>
 		<drools.version>7.3.0.Final</drools.version>
-		<!-- 
-		<drools.version>5.3.1.Final</drools.version>
-		 -->
+		<kie.maven.settings.custom.url>http://localhost:8080/kie-drools-wb-7.3.0.Final-eap7/maven2/</kie.maven.settings.custom.url>
+		<kie.maven.settings.custom.username>admin</kie.maven.settings.custom.username>
+		<kie.maven.settings.custom.password>admin</kie.maven.settings.custom.password>
 	</properties>
 	
 	<build>
 		<finalName>${project.artifactId}</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
 		<plugins>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
@@ -40,19 +46,44 @@
 					</systemProperty>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>copy-files</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target name="copy kie.maven.settings.custom file">
+								<copy file="target/classes/client-settings.xml" todir="${user.home}/.m2" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-		<!-- 
-		<repositories>
-			<repository>
-				<id>redhat-earlyaccess</id>
-				<name>RedHat Early Access</name>
-				<url>https://maven.repository.redhat.com/earlyaccess/all/org/drools/drools-core/</url>
-			</repository>
-		</repositories>
-		 -->
+   
 	</build>
-
+			
 	<profiles>
+		<profile>
+			<id>openshift</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<kie.maven.settings.custom.url>http://rhdm7-install-rhdmcentr-dynamic-questionnaire.apps.d1.casl.rht-labs.com/maven2/</kie.maven.settings.custom.url>
+				<kie.maven.settings.custom.username>dm7Admin</kie.maven.settings.custom.username>
+				<kie.maven.settings.custom.password>dm7Admin!</kie.maven.settings.custom.password>
+			</properties>
+		</profile>
+		
+		<!--
 		<profile>
 			<id>brms-bpms-local-profile</id>
 			<repositories>
@@ -72,6 +103,7 @@
 				</repository>
 			</repositories>
 		</profile>
+		-->
 	</profiles>
 	
 	<dependencies>
