@@ -40,7 +40,7 @@ objects:
           - name: JWS_ADMIN_PASSWORD
             value: xfnfyTKW
           - name: KIE_MAVEN_SETTINGS_CUSTOM
-            value: '$(user.home}/.m2/client-settings.xml'
+            value: '/home/jboss/.m2/client-settings.xml'
           image: docker-registry.default.svc:5000/${NAMESPACE}/${APPLICATION_NAME}@sha256:e0f4677bc857ed2039efeab172df7d04ec9fb7b5e08bd8c111024b9cf8bf4813
           imagePullPolicy: Always
           name: ${APPLICATION_NAME}

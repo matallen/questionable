@@ -65,8 +65,10 @@ public class DefaultController implements Controller{
       log.debug("QuestionReaderConfig annotation found");
       if ("".equals(annotation.path())){
         // business central
+        if(!validateGavString(annotation.gav())){
+          throw new RuntimeException("ReleaseId's MUST have 3 elements, ie. 'com.parent:artifactId:version'");
+        }
         String[] releaseId=annotation.gav().split(":");
-        if (releaseId.length!=3) throw new RuntimeException("ReleaseId's MUST have 3 elements, ie. 'com.parent:artifactId:version'");
         log.debug("QuestionReader annotation specified type 'BusinessCentral' using releaseId of "+annotation.gav());
         businessCentralQuestionReader=new BusinessCentralQuestionReader(KieServices.Factory.get()
             .newReleaseId(releaseId[0], releaseId[1], releaseId[2]), annotation.interval());
@@ -82,6 +84,12 @@ public class DefaultController implements Controller{
     return new ClassPathQuestionReader("questions.xls", "Sheet1");
   }
   
+  public boolean validateGavString(String gav){
+    String[] releaseId=gav.split(":");
+    if (releaseId.length!=3)
+      return false;
+    return true;
+  }
 //  public RulesExecutor createRulesExecutor(){
 //    
 //  }

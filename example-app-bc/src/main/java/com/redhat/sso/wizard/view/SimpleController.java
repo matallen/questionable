@@ -15,12 +15,15 @@ import org.kie.api.KieServices;
 import com.redhat.sso.wizard.domain.Question;
 import com.redhat.sso.wizard.impl.BusinessCentralQuestionReader;
 import com.redhat.sso.wizard.impl.QSession;
+import com.redhat.sso.wizard.impl.QuestionReaderConfig;
+import com.redhat.sso.wizard.impl.QuestionReaderConfig.Type;
 import com.redhat.sso.wizard.session.EhCacheSessionManager;
 import com.redhat.sso.wizard.session.SessionManager;
 import com.redhat.sso.wizard.utils.FluentRulesService;
 import com.redhat.sso.wizard.utils.Json;
 
 @Path("/simple")
+//@QuestionReaderConfig(type=Type.BusinessCentral, gav="com.myteam:questions:LATEST")
 public class SimpleController extends AngularController{
   
   // ###################################
@@ -36,8 +39,16 @@ public class SimpleController extends AngularController{
   private BusinessCentralQuestionReader businessCentralQuestionReader;
   @Override
   public QuestionReader createQuestionReader(){
+    String[] releaseId;
+    
+    if (null!=System.getenv("QUESTIONS_GAV_OVERRIDE") && validateGavString(System.getenv("QUESTIONS_GAV_OVERRIDE"))){
+      releaseId=System.getenv("QUESTIONS_GAV_OVERRIDE").split(":");
+    }else{
+      releaseId="com.myteam:questions:LATEST".split(":");
+    }
+    
     businessCentralQuestionReader=new BusinessCentralQuestionReader(KieServices.Factory.get()
-        .newReleaseId("com.myteam", "questions2", "LATEST"), 10000l);
+        .newReleaseId(releaseId[0], releaseId[1], releaseId[2]), 10000l);
     return businessCentralQuestionReader;
   }
   
