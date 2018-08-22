@@ -162,7 +162,7 @@ parameters:
   displayName: Decision Manager Url
   name: DECISION_MANAGER_URL
   required: true
-  value: 'http://rhdm7-install-rhdmcentr-questionable2.apps.d1.casl.rht-labs.com'
+  value: 'http://rhdm7-install-rhdmcentr-${NAMESPACE}.apps.d1.casl.rht-labs.com'
 - description: Decision Manager credentials.
   displayName: Decision Manager Username
   name: DECISION_MANAGER_USERNAME

@@ -36,12 +36,15 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
       log.debug("Decision Manager URL override provided, checking for client-settings.xml");
       String settingsXmlDir=System.getProperty("user.home");
       
-      if (null!=System.getenv("CLIENT_SETTINGS_XML"))
-        settingsXmlDir=System.getenv("CLIENT_SETTINGS_XML");
+      File dir=new File(settingsXmlDir+"/.m2/");
+      File file=new File(dir, "client-settings.xml");
+      
+      if (null!=System.getenv("CLIENT_SETTINGS_XML")){
+        file=new File(System.getenv("CLIENT_SETTINGS_XML"));
+        dir=file.getParentFile();
+      }
       
       try{
-        File dir=new File(settingsXmlDir+"/.m2/");
-        File file=new File(dir, "client-settings.xml");
         if (!file.exists()){
           
           if (!dir.exists()){
