@@ -43,6 +43,7 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
         settingsXml=settingsXml.replaceAll("$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
         settingsXml=settingsXml.replaceAll("$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
         String dir="/opt/eap/standalone/data";
+        new File(dir).mkdirs();
         log.debug("Writing "+dir+"/client-settings.xml with URL: "+System.getenv("DECISION_MANAGER_URL"));
         
         IOUtils.write(settingsXml, new FileOutputStream(new File(dir+"/.m2/client-settings.xml")));
