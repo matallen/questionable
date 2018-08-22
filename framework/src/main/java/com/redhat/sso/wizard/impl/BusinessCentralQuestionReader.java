@@ -66,8 +66,8 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
         }else
           log.debug("client-setting.xml already exists: "+file.getAbsolutePath());
         
-        log.debug("Setting 'kie.maven.settings.custom' to '"+dir+"client-settings.xml'");
-        System.setProperty("kie.maven.settings.custom", dir+"client-settings.xml");
+        log.debug("Setting 'kie.maven.settings.custom' to '"+file.getAbsolutePath()+"'");
+        System.setProperty("kie.maven.settings.custom", file.getAbsolutePath());
         
       }catch(IOException e){
 //        e.printStackTrace();
