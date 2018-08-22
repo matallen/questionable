@@ -37,8 +37,10 @@ public abstract class DefaultQuestionReader implements QuestionReader{
     
     Collections.sort(questions, new Comparator<Question>() {
       public int compare(Question lhs, Question rhs) {
-          // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-          return lhs.getOrder() < rhs.getOrder() ? -1 : (lhs.getOrder() > rhs.getOrder()) ? 1 : 0;
+        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+        int lhsOrder=lhs!=null && lhs.getOrder()!=null?lhs.getOrder():0;
+        int rhsOrder=rhs!=null && rhs.getOrder()!=null?rhs.getOrder():0;
+        return lhsOrder < rhsOrder ? -1 : (lhsOrder > rhsOrder) ? 1 : 0;
       }
     });
     

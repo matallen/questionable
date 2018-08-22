@@ -33,7 +33,7 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
     KieServices ks=KieServices.Factory.get();
     
     if (null!=System.getenv("DECISION_MANAGER_URL")){
-      log.debug("Decision Manager URL override provided, writing client-settings.xml");
+      log.debug("Decision Manager URL override provided, checking for client-settings.xml");
       String settingsXmlDir=System.getProperty("user.home");
       
       if (null!=System.getenv("CLIENT_SETTINGS_XML"))
