@@ -42,13 +42,13 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
         settingsXml=settingsXml.replaceAll("$SERVER_URL", System.getenv("DECISION_MANAGER_URL"));
         settingsXml=settingsXml.replaceAll("$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
         settingsXml=settingsXml.replaceAll("$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
-        String dir="/home/jboss/target/.m2";
+        String dir="/home/jboss/target/";
         new File(dir).mkdirs();
-        log.debug("Writing "+dir+"/client-settings.xml with URL: "+System.getenv("DECISION_MANAGER_URL"));
+        log.debug("Writing "+dir+"client-settings.xml with URL: "+System.getenv("DECISION_MANAGER_URL"));
         
-        IOUtils.write(settingsXml, new FileOutputStream(new File(dir+"/client-settings.xml")));
-        log.debug("Setting 'kie.maven.settings.custom' to '"+dir+"/client-settings.xml'");
-        System.setProperty("kie.maven.settings.custom", dir+"/client-settings.xml");
+        IOUtils.write(settingsXml, new FileOutputStream(new File(dir,"client-settings.xml")));
+        log.debug("Setting 'kie.maven.settings.custom' to '"+dir+"client-settings.xml'");
+        System.setProperty("kie.maven.settings.custom", dir+"client-settings.xml");
       }catch(IOException e){
         e.printStackTrace();
       }

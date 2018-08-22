@@ -79,6 +79,10 @@ objects:
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 60
+        volumes:
+          - name: dynamic-wizard-app-storage
+            persistentVolumeClaim:
+              claimName: app-claim
     test: false
     triggers:
     - imageChangeParams:
