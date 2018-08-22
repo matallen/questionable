@@ -51,7 +51,9 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
         File dest=new File(dir,"client-settings.xml");
         if (!dest.exists()){
           boolean y=dest.createNewFile();
-          log.debug("createNewFile success? = "+y);
+          log.debug(dest.getAbsolutePath()+" doesnt exist, so createNewFile called. Success? = "+y);
+        }else{
+          log.debug(dest.getAbsolutePath()+" already exists");
         }
 //        IOUtils.write(settingsXml, new FileOutputStream(dest));
         FileOutputStream fos=new FileOutputStream(dest);
