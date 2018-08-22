@@ -42,7 +42,7 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
         settingsXml=settingsXml.replaceAll("$SERVER_URL", System.getenv("DECISION_MANAGER_URL"));
         settingsXml=settingsXml.replaceAll("$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
         settingsXml=settingsXml.replaceAll("$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
-        String dir="/opt/eap/standalone/data/.m2";
+        String dir="/home/jboss/target/.m2";
         new File(dir).mkdirs();
         log.debug("Writing "+dir+"/client-settings.xml with URL: "+System.getenv("DECISION_MANAGER_URL"));
         

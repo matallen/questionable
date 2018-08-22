@@ -71,6 +71,9 @@ objects:
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /home/jboss/target
+              name: dynamic-wizard-app-storage
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
