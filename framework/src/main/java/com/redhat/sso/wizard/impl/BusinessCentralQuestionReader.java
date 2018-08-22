@@ -49,8 +49,14 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
         log.debug("Writing "+dir+"client-settings.xml with URL: "+System.getenv("DECISION_MANAGER_URL"));
         
         File dest=new File(dir,"client-settings.xml");
-        if (!dest.exists()) dest.createNewFile();
-        IOUtils.write(settingsXml, new FileOutputStream(dest));
+        if (!dest.exists()){
+          boolean y=dest.createNewFile();
+          log.debug("createNewFile success? = "+y);
+        }
+//        IOUtils.write(settingsXml, new FileOutputStream(dest));
+        FileOutputStream fos=new FileOutputStream(dest);
+        fos.write(settingsXml.getBytes());
+        fos.close();
         log.debug("Setting 'kie.maven.settings.custom' to '"+dir+"client-settings.xml'");
         System.setProperty("kie.maven.settings.custom", dir+"client-settings.xml");
       }catch(IOException e){
