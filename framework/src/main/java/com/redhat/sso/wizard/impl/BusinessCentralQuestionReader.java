@@ -39,9 +39,9 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
       try{
         String userHome=System.getProperty("user.home");
         String settingsXml=IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("client-settings-template.xml"));
-        settingsXml=settingsXml.replaceAll("$SERVER_URL", System.getenv("DECISION_MANAGER_URL"));
-        settingsXml=settingsXml.replaceAll("$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
-        settingsXml=settingsXml.replaceAll("$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
+        settingsXml=settingsXml.replaceAll("\\$SERVER_URL", System.getenv("DECISION_MANAGER_URL"));
+        settingsXml=settingsXml.replaceAll("\\$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
+        settingsXml=settingsXml.replaceAll("\\$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
         String dir="/home/jboss/target/";
         boolean x=new File(dir).mkdirs();
         log.debug("settings.xml template converted:\n"+settingsXml);
