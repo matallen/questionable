@@ -32,39 +32,83 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
   public KieSession newKieSession(){
     KieServices ks=KieServices.Factory.get();
     
-    if (null!=System.getenv("DECISION_MANAGER_URL") &&
-        null!=System.getenv("DECISION_MANAGER_USERNAME") &&
-        null!=System.getenv("DECISION_MANAGER_PASSWORD")
-        ){
+    if (null!=System.getenv("DECISION_MANAGER_URL")){
+      log.debug("Decision Manager URL override provided, writing client-settings.xml");
+      String settingsXmlDir=System.getProperty("user.home");
+      
+      if (null!=System.getenv("CLIENT_SETTINGS_XML"))
+        settingsXmlDir=System.getenv("CLIENT_SETTINGS_XML");
+      
       try{
-        String userHome=System.getProperty("user.home");
-        String settingsXml=IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("client-settings-template.xml"));
-        settingsXml=settingsXml.replaceAll("\\$SERVER_URL", System.getenv("DECISION_MANAGER_URL"));
-        settingsXml=settingsXml.replaceAll("\\$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
-        settingsXml=settingsXml.replaceAll("\\$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
-        String dir="/home/jboss/target/";
-        boolean x=new File(dir).mkdirs();
-        log.debug("settings.xml template converted:\n"+settingsXml);
-        log.debug("mkdirs success? = "+x);
-        log.debug("Writing "+dir+"client-settings.xml with URL: "+System.getenv("DECISION_MANAGER_URL"));
+        File dir=new File(settingsXmlDir+"/.m2/");
+        File file=new File(dir, "client-settings.xml");
+        if (!file.exists()){
+          
+          if (!dir.exists()){
+            log.debug("parent dir for client-setting.xml doesn't exist, creating...."+dir.getAbsolutePath());
+            boolean mkdirs=dir.mkdirs();
+            log.debug("mkdirs success? = "+mkdirs);
+          }else
+            log.debug("parent dir for client-setting.xml already exists: "+dir.getAbsolutePath());
+          
+          log.debug("client-setting.xml file doesn't exist, creating...."+file.getAbsolutePath());
+          
+          // Get and replace placeholders in settings.xml for kie-ci
+          String settingsXml=IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("client-settings-template.xml"));
+          settingsXml=settingsXml.replaceAll("\\$SERVER_URL", System.getenv("DECISION_MANAGER_URL"));
+          settingsXml=settingsXml.replaceAll("\\$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
+          settingsXml=settingsXml.replaceAll("\\$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
+          
+          FileOutputStream fos=new FileOutputStream(file);
+          IOUtils.write(settingsXml.getBytes(), fos);
+          fos.close();
+          
+        }else
+          log.debug("client-setting.xml already exists: "+file.getAbsolutePath());
         
-        File dest=new File(dir,"client-settings.xml");
-        if (!dest.exists()){
-          boolean y=dest.createNewFile();
-          log.debug(dest.getAbsolutePath()+" doesnt exist, so createNewFile called. Success? = "+y);
-        }else{
-          log.debug(dest.getAbsolutePath()+" already exists");
-        }
-//        IOUtils.write(settingsXml, new FileOutputStream(dest));
-        FileOutputStream fos=new FileOutputStream(dest);
-        fos.write(settingsXml.getBytes());
-        fos.close();
         log.debug("Setting 'kie.maven.settings.custom' to '"+dir+"client-settings.xml'");
         System.setProperty("kie.maven.settings.custom", dir+"client-settings.xml");
+        
       }catch(IOException e){
-        e.printStackTrace();
+//        e.printStackTrace();
+        throw new RuntimeException("Aborting rule execution", e);
       }
+      
     }
+    
+//    if (null!=System.getenv("DECISION_MANAGER_URL") &&
+//        null!=System.getenv("DECISION_MANAGER_USERNAME") &&
+//        null!=System.getenv("DECISION_MANAGER_PASSWORD")
+//        ){
+//      try{
+//        String userHome=System.getProperty("user.home");
+//        String settingsXml=IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("client-settings-template.xml"));
+//        settingsXml=settingsXml.replaceAll("\\$SERVER_URL", System.getenv("DECISION_MANAGER_URL"));
+//        settingsXml=settingsXml.replaceAll("\\$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
+//        settingsXml=settingsXml.replaceAll("\\$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
+//        String dir="/home/jboss/target/";
+//        boolean x=new File(dir).mkdirs();
+//        log.debug("settings.xml template converted:\n"+settingsXml);
+//        log.debug("mkdirs success? = "+x);
+//        log.debug("Writing "+dir+"client-settings.xml with URL: "+System.getenv("DECISION_MANAGER_URL"));
+//        
+//        File dest=new File(dir,"client-settings.xml");
+//        if (!dest.exists()){
+//          boolean y=dest.createNewFile();
+//          log.debug(dest.getAbsolutePath()+" doesnt exist, so createNewFile called. Success? = "+y);
+//        }else{
+//          log.debug(dest.getAbsolutePath()+" already exists");
+//        }
+////        IOUtils.write(settingsXml, new FileOutputStream(dest));
+//        FileOutputStream fos=new FileOutputStream(dest);
+//        fos.write(settingsXml.getBytes());
+//        fos.close();
+//        log.debug("Setting 'kie.maven.settings.custom' to '"+dir+"client-settings.xml'");
+//        System.setProperty("kie.maven.settings.custom", dir+"client-settings.xml");
+//      }catch(IOException e){
+//        e.printStackTrace();
+//      }
+//    }
     
 //    if (null!=System.getenv("KIE_MAVEN_SETTINGS_CUSTOM")){
 //      log.debug("Settings 'kie.maven.settings.custom' to '"+System.getenv("KIE_MAVEN_SETTINGS_CUSTOM")+"'");

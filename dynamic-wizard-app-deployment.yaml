@@ -47,6 +47,8 @@ objects:
             value: '${DECISION_MANAGER_PASSWORD}'
           - name: QUESTIONS_GAV_OVERRIDE
             value: 'com.redhat.questionnaire:questions:LATEST'
+          - name: CLIENT_SETTINGS_XML
+            value: '/home/jboss/target'
           image: docker-registry.default.svc:5000/${NAMESPACE}/${APPLICATION_NAME}@sha256:e0f4677bc857ed2039efeab172df7d04ec9fb7b5e08bd8c111024b9cf8bf4813
           imagePullPolicy: Always
           name: ${APPLICATION_NAME}
@@ -171,3 +173,8 @@ parameters:
   name: DECISION_MANAGER_PASSWORD
   required: true
   value: 'dm7Admin!'
+- description: Decision Manager Group Artifact Version (in G:A:V format) to override where the questions are driven from
+  displayName: Decision Manager maven GAV for questions
+  name: QUESTIONS_GAV_OVERRIDE
+  required: true
+  value: 'com.redhat.questionnaire:questions:LATEST'
