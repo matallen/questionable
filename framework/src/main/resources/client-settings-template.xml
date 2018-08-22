@@ -11,7 +11,7 @@
         <repository>
           <id>client-remote</id>
           <name>Client Remote</name>
-          <url>http://localhost:8080/kie-drools-wb-7.3.0.Final-eap7/maven2/</url>
+          <url>$SERVER_URL/maven2/</url>
           <releases>
             <enabled>true</enabled>
             <updatePolicy>always</updatePolicy>
@@ -28,8 +28,8 @@
   <servers>
     <server>
       <id>client-remote</id>
-      <username>admin</username>
-      <password>admin</password>
+      <username>$USERNAME</username>
+      <password>$PASSWORD</password>
     </server>
   </servers>
 
@@ -38,4 +38,3 @@
   </activeProfiles>
   
 </settings>
-
