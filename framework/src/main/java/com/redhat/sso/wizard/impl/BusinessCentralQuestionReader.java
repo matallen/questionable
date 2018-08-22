@@ -43,7 +43,9 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
         settingsXml=settingsXml.replaceAll("$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
         settingsXml=settingsXml.replaceAll("$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
         String dir="/home/jboss/target/";
-        new File(dir).mkdirs();
+        boolean x=new File(dir).mkdirs();
+        log.debug("settings.xml template converted:\n"+settingsXml);
+        log.debug("mkdirs success? = "+x);
         log.debug("Writing "+dir+"client-settings.xml with URL: "+System.getenv("DECISION_MANAGER_URL"));
         
         IOUtils.write(settingsXml, new FileOutputStream(new File(dir,"client-settings.xml")));
