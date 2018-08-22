@@ -42,6 +42,11 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
       if (null!=System.getenv("CLIENT_SETTINGS_XML")){
         file=new File(System.getenv("CLIENT_SETTINGS_XML"));
         dir=file.getParentFile();
+        
+//        if (null==System.getenv("M2_HOME")){
+          log.debug("Setting M2_HOME to: "+dir.getAbsolutePath());
+          System.getenv().put("M2_HOME", dir.getAbsolutePath());
+//        }
       }
       
       try{
