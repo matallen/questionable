@@ -39,8 +39,14 @@ objects:
             value: VnTsjJjY
           - name: JWS_ADMIN_PASSWORD
             value: xfnfyTKW
-          - name: KIE_MAVEN_SETTINGS_CUSTOM
-            value: '/home/jboss/.m2/client-settings.xml'
+          - name: DECISION_MANAGER_URL
+            value: '${DECISION_MANAGER_URL}'
+          - name: DECISION_MANAGER_USERNAME
+            value: '${DECISION_MANAGER_USERNAME}'
+          - name: DECISION_MANAGER_PASSWORD
+            value: '${DECISION_MANAGER_PASSWORD}'
+          - name: QUESTIONS_GAV_OVERRIDE
+            value: 'com.redhat.questionnaire:questions:LATEST'
           image: docker-registry.default.svc:5000/${NAMESPACE}/${APPLICATION_NAME}@sha256:e0f4677bc857ed2039efeab172df7d04ec9fb7b5e08bd8c111024b9cf8bf4813
           imagePullPolicy: Always
           name: ${APPLICATION_NAME}
@@ -143,5 +149,18 @@ parameters:
   name: NAMESPACE
   required: true
   value: openshift
-
-
+- description: The URL of Decision Manager.
+  displayName: Decision Manager Url
+  name: DECISION_MANAGER_URL
+  required: true
+  value: 'http://rhdm7-install-rhdmcentr-questionable2.apps.d1.casl.rht-labs.com'
+- description: Decision Manager credentials.
+  displayName: Decision Manager Username
+  name: DECISION_MANAGER_USERNAME
+  required: true
+  value: 'dm7Admin'
+- description: Decision Manager credentials.
+  displayName: Decision Manager Password
+  name: DECISION_MANAGER_PASSWORD
+  required: true
+  value: 'dm7Admin!'

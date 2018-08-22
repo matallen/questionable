@@ -1,5 +1,10 @@
 package com.redhat.sso.wizard.impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
@@ -27,10 +32,29 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
   public KieSession newKieSession(){
     KieServices ks=KieServices.Factory.get();
     
-    if (null!=System.getenv("KIE_MAVEN_SETTINGS_CUSTOM")){
-      log.debug("Settings 'kie.maven.settings.custom' to '"+System.getenv("KIE_MAVEN_SETTINGS_CUSTOM")+"'");
-      System.setProperty("kie.maven.settings.custom", System.getenv("KIE_MAVEN_SETTINGS_CUSTOM"));
+    if (null!=System.getenv("DECISION_MANAGER_URL") &&
+        null!=System.getenv("DECISION_MANAGER_USERNAME") &&
+        null!=System.getenv("DECISION_MANAGER_PASSWORD")
+        ){
+      try{
+        String userHome=System.getProperty("user.home");
+        String settingsXml=IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("client-settings-template.xml"));
+        settingsXml=settingsXml.replaceAll("$SERVER_URL", System.getenv("DECISION_MANAGER_URL"));
+        settingsXml=settingsXml.replaceAll("$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
+        settingsXml=settingsXml.replaceAll("$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
+        log.debug("Writing client-settings.xml with URL: "+System.getenv("DECISION_MANAGER_URL"));
+        IOUtils.write(settingsXml, new FileOutputStream(new File(userHome+"/.m2/client-settings.xml")));
+        log.debug("Setting 'kie.maven.settings.custom' to '"+userHome+"/.m2/client-settings.xml'");
+        System.setProperty("kie.maven.settings.custom", userHome+"/.m2/client-settings.xml");
+      }catch(IOException e){
+        e.printStackTrace();
+      }
     }
+    
+//    if (null!=System.getenv("KIE_MAVEN_SETTINGS_CUSTOM")){
+//      log.debug("Settings 'kie.maven.settings.custom' to '"+System.getenv("KIE_MAVEN_SETTINGS_CUSTOM")+"'");
+//      System.setProperty("kie.maven.settings.custom", System.getenv("KIE_MAVEN_SETTINGS_CUSTOM"));
+//    }
     
     log.debug("Initialising kContainer ("+releaseId+")...");
     kContainer=ks.newKieContainer(releaseId);

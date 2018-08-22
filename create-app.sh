@@ -12,8 +12,13 @@ fi
 echo "Deploying to project: $ProjectName"
 
 
-PREFIX=rhdm71
-BRANCH=$PREFIX-dev
+#PREFIX=rhdm70
+#BRANCH=$PREFIX-dev
+
+PREFIX=rhdm70
+BRANCH=7.0.x
+
+
 
 echo "Importing Image Streams"
 oc create -f https://raw.githubusercontent.com/jboss-container-images/rhdm-7-openshift-image/$BRANCH/$PREFIX-image-streams.yaml
