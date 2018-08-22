@@ -63,6 +63,7 @@ public class BusinessCentralQuestionReader extends DefaultQuestionReader {
           
           // Get and replace placeholders in settings.xml for kie-ci
           String settingsXml=IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("client-settings-template.xml"));
+          settingsXml=settingsXml.replaceAll("\\$M2_HOME", dir.getAbsolutePath());
           settingsXml=settingsXml.replaceAll("\\$SERVER_URL", System.getenv("DECISION_MANAGER_URL"));
           settingsXml=settingsXml.replaceAll("\\$USERNAME", System.getenv("DECISION_MANAGER_USERNAME"));
           settingsXml=settingsXml.replaceAll("\\$PASSWORD", System.getenv("DECISION_MANAGER_PASSWORD"));
