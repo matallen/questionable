@@ -7,9 +7,12 @@
   <profiles>
     <profile>
       <id>repositories</id>
+      <activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
       <repositories>
         <repository>
-          <id>client-remote</id>
+          <id>bpms-client</id>
           <name>Client Remote</name>
           <url>$SERVER_URL/maven2/</url>
           <releases>
@@ -27,9 +30,25 @@
 
   <servers>
     <server>
-      <id>client-remote</id>
+      <id>bpms-client</id>
       <username>$USERNAME</username>
       <password>$PASSWORD</password>
+      <configuration>
+        <wagonProvider>httpclient</wagonProvider>
+        <httpConfiguration>
+          <all>
+            <usePreemptive>true</usePreemptive>
+            <!--
+            <params>
+              <property>
+                <name>http.authentication.preemptive</name>
+                <value>%b,true</value>
+              </property>
+            </params>
+            -->
+          </all>
+        </httpConfiguration>
+      </configuration>
     </server>
   </servers>
 

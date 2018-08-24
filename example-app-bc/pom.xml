@@ -47,6 +47,8 @@
 				</configuration>
 			</plugin>
 			
+			<!-- Needed to provide the user/pass to the dm7 instance when uploading artifacts on an openshift pod -->
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -61,11 +63,14 @@
 						<configuration>
 							<target name="copy kie.maven.settings.custom file">
 								<copy file="target/classes/client-settings.xml" todir="${user.home}/.m2" />
+								<copy file="target/classes/client-settings.xml" tofile="${user.home}/.m2/settings.xml" />
 							</target>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+			-->
+			
 		</plugins>
    
 	</build>
@@ -77,7 +82,7 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
-				<kie.maven.settings.custom.url>http://rhdm7-install-rhdmcentr-dynamic-questionnaire.apps.d1.casl.rht-labs.com/maven2/</kie.maven.settings.custom.url>
+				<kie.maven.settings.custom.url>http://rhdm7-install-rhdmcentr-${OPENSHIFT_BUILD_NAMESPACE}.apps.d1.casl.rht-labs.com/maven2/</kie.maven.settings.custom.url>
 				<kie.maven.settings.custom.username>dm7Admin</kie.maven.settings.custom.username>
 				<kie.maven.settings.custom.password>dm7Admin!</kie.maven.settings.custom.password>
 			</properties>

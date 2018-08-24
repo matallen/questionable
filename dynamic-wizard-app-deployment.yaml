@@ -40,7 +40,7 @@ objects:
           - name: JWS_ADMIN_PASSWORD
             value: xfnfyTKW
           - name: DECISION_MANAGER_URL
-            value: '${DECISION_MANAGER_URL}'
+            value: 'http://rhdm7-install-rhdmcentr-${NAMESPACE}.apps${RHDMCENTR_URL_DOMAIN}'
           - name: DECISION_MANAGER_USERNAME
             value: '${DECISION_MANAGER_USERNAME}'
           - name: DECISION_MANAGER_PASSWORD
@@ -48,7 +48,9 @@ objects:
           - name: QUESTIONS_GAV_OVERRIDE
             value: 'com.redhat.questionnaire:questions:LATEST'
           - name: CLIENT_SETTINGS_XML
-            value: '/home/jboss/target'
+            value: '/home/jboss/target/.m2/client-settings.xml'
+          - name: M2_HOME
+            value: '/home/jboss/target/.m2'
           image: docker-registry.default.svc:5000/${NAMESPACE}/${APPLICATION_NAME}@sha256:e0f4677bc857ed2039efeab172df7d04ec9fb7b5e08bd8c111024b9cf8bf4813
           imagePullPolicy: Always
           name: ${APPLICATION_NAME}
@@ -147,6 +149,18 @@ objects:
     type: ClusterIP
   status:
     loadBalancer: {}
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+   name: app-claim
+   annotations:
+     volume.beta.kubernetes.io/storage-class: standard
+  spec:
+   accessModes:
+    - ReadWriteOnce
+   resources:
+     requests:
+       storage: 1Gi
 parameters:
 - description: The name for the application.
   displayName: Application name
@@ -162,7 +176,7 @@ parameters:
   displayName: Decision Manager Url
   name: DECISION_MANAGER_URL
   required: true
-  value: 'http://rhdm7-install-rhdmcentr-${NAMESPACE}.apps.d1.casl.rht-labs.com'
+  value: 'http://rhdm7-install-rhdmcentr-PROJECTNAME.apps.d1.casl.rht-labs.com'
 - description: Decision Manager credentials.
   displayName: Decision Manager Username
   name: DECISION_MANAGER_USERNAME
@@ -178,3 +192,10 @@ parameters:
   name: QUESTIONS_GAV_OVERRIDE
   required: true
   value: 'com.redhat.questionnaire:questions:LATEST'
+
+- description: Openshift URL domain
+  displayName: Openshift URL domain
+  name: RHDMCENTR_URL_DOMAIN
+  required: true
+  value: '.d1.casl.rht-labs.com'
+  

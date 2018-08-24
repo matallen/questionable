@@ -11,6 +11,10 @@ else
 fi
 echo "Deploying to project: $ProjectName"
 
+RHDMCENTR_URL_DOMAIN=`oc project | awk '{print $6}' | grep -P '\.(.+)com' -o`
+
+
+
 
 #PREFIX=rhdm70
 #BRANCH=$PREFIX-dev
@@ -47,7 +51,27 @@ oc new-app --template=$PREFIX-full-persistent \
 		-p MAVEN_REPO_PASSWORD="dm7Admin!" \
 		-p DECISION_CENTRAL_VOLUME_CAPACITY="512Mi"
 
+
+
+# wait for the dm pod to come up
+while [[ `oc get pods -l=deploymentconfig=rhdm7-install-rhdmcentr | grep "1/1.*Running"` != *"rhdmcentr"* ]]; do
+  echo "waiting for rhdmcentr to be available..."
+  sleep 3
+done
+
+DECISION_MANAGER_URL=`oc get routes | grep rhdmcentr | grep -v secure | awk '{print $2}'`
+
 echo "Deploying Dynamic Questionnaire Demo App"
 oc process --param=APPLICATION_NAME=dynamic-wizard-app -f dynamic-wizard-app-build.yaml | oc apply -f-
-oc process --param=NAMESPACE=$ProjectName --param=APPLICATION_NAME=dynamic-wizard-app -f dynamic-wizard-app-deployment.yaml | oc apply -f-
+#oc process --param=NAMESPACE=$ProjectName --param=APPLICATION_NAME=dynamic-wizard-app --param=RHDMCENTR_URL_DOMAIN=$RHDMCENTR_URL_DOMAIN -f dynamic-wizard-app-deployment.yaml | oc apply -f-
+oc process --param=NAMESPACE=$ProjectName --param=APPLICATION_NAME=dynamic-wizard-app --param=DECISION_MANAGER_URL=$DECISION_MANAGER_URL -f dynamic-wizard-app-deployment.yaml | oc apply -f-
+
+
+# deploy model
+./deploy-model-to-dm7.sh $ProjectName
+
+
+# deploy .niogit
+./deploy-rules.sh
+
 
