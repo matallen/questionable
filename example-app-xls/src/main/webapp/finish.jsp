@@ -30,7 +30,7 @@
     
 	  var app = angular.module('myApp', []);
 	  
-	  var controllerName="<%=com.redhat.sso.wizard.view.FullAccessExampleController.class.getAnnotation(javax.ws.rs.Path.class).value()%>";
+	  var controllerName="<%=com.redhat.sso.wizard.view.SimpleController.class.getAnnotation(javax.ws.rs.Path.class).value()%>";
 	  
 	  app.controller('FormController', ['$scope', '$http', '$parse', 
 	    function($scope, $http) {
@@ -40,7 +40,10 @@
 	      
 	      $http.get('${pageContext.request.contextPath}/api'+controllerName+'/pages/result?sessionId=<%=request.getParameter("sessionId")%>').then(successCallback, errorCallback);
 	      function successCallback(response){
-	      	$scope.data = response.data
+	      	$scope.data = response.data;
+	      	$scope.models = response.data['Finish'].questions;
+	      	$scope.questions = response.data['Finish'].questions;
+	      	//console.log("success");
 	      }
 	      function errorCallback(response){
 	      	console.log(response.data);
