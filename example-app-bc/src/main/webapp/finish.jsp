@@ -40,7 +40,10 @@
 	      
 	      $http.get('${pageContext.request.contextPath}/api'+controllerName+'/pages/result?sessionId=<%=request.getParameter("sessionId")%>').then(successCallback, errorCallback);
 	      function successCallback(response){
-	      	$scope.data = response.data
+	      	$scope.data = response.data;
+	      	$scope.models = response.data['Finish'].questions;
+	      	$scope.questions = response.data['Finish'].questions;
+	      	//console.log("success");
 	      }
 	      function errorCallback(response){
 	      	console.log(response.data);
