@@ -5,6 +5,8 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -258,7 +260,7 @@ public class DefaultController implements Controller{
     if (session==null) return Response.status(500).entity("Unable to find existing session for Id: "+sessionId).build();
     String payload=IOUtils.toString(request.getInputStream());
     String result=Json.newObjectMapper(true).writeValueAsString(finish(session, payload));
-    
+
     log.debug("Finish:: Returning -> "+result);
     return Response.status(200).entity(result).build();
   }
@@ -278,6 +280,8 @@ public class DefaultController implements Controller{
     
     ObjectMapper mapper = Json.newObjectMapper(true);
     
+//    System.out.println("pages/result::groups2="+mapper.writeValueAsString(result(session)));
+    
     String result = mapper.writeValueAsString(result(session));
     
 //    String result=Json.newObjectMapper(true).writeValueAsString(result(session));
@@ -286,7 +290,7 @@ public class DefaultController implements Controller{
   }
   
   public Object result(QSession session) throws IOException {
-    return session.getGroups();
+    return session.getGroups().values();
 //    Map<String, Map<String, Object>> result=new HashMap<String, Map<String, Object>>();
 //    for(Entry<String, Group> e:session.getGroups().entrySet()){
 //      if (!result.containsKey(e.getKey())) result.put(e.getKey(), new HashMap<String, Object>());

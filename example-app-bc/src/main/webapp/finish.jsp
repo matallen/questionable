@@ -41,9 +41,19 @@
 	      $http.get('${pageContext.request.contextPath}/api'+controllerName+'/pages/result?sessionId=<%=request.getParameter("sessionId")%>').then(successCallback, errorCallback);
 	      function successCallback(response){
 	      	$scope.data = response.data;
-	      	$scope.models = response.data['Finish'].questions;
-	      	$scope.questions = response.data['Finish'].questions;
-	      	//console.log("success");
+	      	
+	      	$scope.questions=[];
+	      	$scope.models=[];
+	      	for(i=0;i<response.data.length-1;i++){
+	      		if (null!=response.data[i].questions){
+	      			for(q=0;q<response.data[i].questions.length-1;q++){
+			      		console.log("Q="+JSON.stringify(response.data[i].questions[q]));
+			      		$scope.questions.push(response.data[i].questions[q]);
+			      		$scope.models.push(response.data[i].questions[q]);
+	      			}
+	      		}
+	      	}
+	      	
 	      }
 	      function errorCallback(response){
 	      	console.log(response.data);
@@ -56,7 +66,7 @@
 	<body ng-controller="FormController">
 		
 		<div class="col-sm-4 bold">
-					<div class="header">Results</div>
+					<div class="header">A sample Finish page</div>
 					<div class="questions">
 						<div ng-repeat="q in questions">
 							<div class="row">
