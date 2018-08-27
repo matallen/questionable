@@ -1,0 +1,6 @@
+# pack-refs with: peeled
+12eabeab99ddbeaf821b57622961e75c7812b51e refs/heads/dm7Admin-uf-user
+a3042b482dd15c7ceb84c8753cdd36650237def2 refs/heads/locks
+6e0688d2e528fc1c52228ccee61ca270e9355fbf refs/heads/master
+07dd726e9f9fa456cfd55a925d3d7bb5315606fd refs/heads/servers
+de005d7f4ef97f2d09a1a85d7f9867fc83864d6d refs/heads/social

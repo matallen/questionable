@@ -16,7 +16,7 @@
 		<!--
 		<drools.version>5.3.1.Final</drools.version>
 		-->
-		<drools.version>7.3.0.Final</drools.version>
+		<drools.version>7.10.0.Final</drools.version>
 	</properties>
 	
 	<build>

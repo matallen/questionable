@@ -59,6 +59,10 @@ while [[ `oc get pods -l=deploymentconfig=rhdm7-install-rhdmcentr | grep "1/1.*R
   sleep 3
 done
 
+# Remove the unwanted KieServer
+oc delete dc rhdm7-install-kieserver
+
+
 DECISION_MANAGER_URL=`oc get routes | grep rhdmcentr | grep -v secure | awk '{print $2}'`
 
 echo "Deploying Dynamic Questionnaire Demo App"
