@@ -12,7 +12,7 @@
 			</activation>
       <repositories>
         <repository>
-          <id>bpms-client</id>
+          <id>guvnor-m2-repo</id>
           <name>Client Remote</name>
           <url>$SERVER_URL/maven2/</url>
           <releases>
@@ -30,7 +30,7 @@
 
   <servers>
     <server>
-      <id>bpms-client</id>
+      <id>guvnor-m2-repo</id>
       <username>$USERNAME</username>
       <password>$PASSWORD</password>
       <configuration>

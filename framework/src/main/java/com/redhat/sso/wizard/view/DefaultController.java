@@ -90,10 +90,6 @@ public class DefaultController implements Controller{
       return false;
     return true;
   }
-//  public RulesExecutor createRulesExecutor(){
-//    
-//  }
-  
   
   /*private*/ public SessionManager getSessionManager(){
     if (sessionManager==null) sessionManager=createSessionManager();
@@ -289,41 +285,6 @@ public class DefaultController implements Controller{
     return Response.status(200).entity(result).build();
   }
   
-//  private void jsonStripFieldsTest(QSession session) throws JsonGenerationException, JsonMappingException, IOException{
-//    ObjectMapper mapper = Json.newObjectMapper(true);
-//    
-//    SimpleBeanPropertyFilter theFilter = new SimpleBeanPropertyFilter() {
-//      public void serializeAsField(Object pojo, JsonGenerator jgen, SerializerProvider provider, BeanPropertyWriter writer) throws Exception {
-//        log.debug("XXXXXXXXXXXXXXX");
-//         if (include(writer)) {
-//            if (!writer.getName().equals("name")) {
-//               writer.serializeAsField(pojo, jgen, provider);
-//               return;
-//            }
-//            //int intValue = ((MyDtoWithFilter) pojo).getIntValue();
-//            log.debug("WRITING NAME");
-//            String name = ((Group) pojo).getName();
-//            if (name!=null) {
-//               writer.serializeAsField(pojo, jgen, provider);
-//            }
-////         } else if (!jgen.canOmitFields()) { // since 2.3
-////            writer.serializeAsOmittedField(pojo, jgen, provider);
-//         }
-//      }
-//      protected boolean include(BeanPropertyWriter writer) {
-//        log.debug("includeBWPW - hit");
-//         return true;
-//      }
-//      protected boolean include(PropertyWriter writer) {
-//        log.debug("includePW - hit");
-//         return true;
-//      }
-//   };
-//   FilterProvider filters = new SimpleFilterProvider().addFilter("myFilter", theFilter);
-//   String result = mapper.writer(filters).writeValueAsString(result(session));
-//   
-//  }
-  
   public Object result(QSession session) throws IOException {
     return session.getGroups();
 //    Map<String, Map<String, Object>> result=new HashMap<String, Map<String, Object>>();
@@ -367,18 +328,6 @@ public class DefaultController implements Controller{
     }
     return result;
   }
-  
-//  public static void main(String[] asd) throws IOException{
-//    Map<String,Object> data=new MapBuilder<String,Object>().put("Field1", "Value1").put("Field2", "Value2").put("Field3", true).build();
-//    log.debug(xxx("Field2=='Value2'", data));
-//    log.debug(xxx("Field2.length", data));
-//    log.debug(xxx("Field3 == true", data));
-////    log.debug(MVEL.eval("", data));
-//  }
-//  public static String xxx(String expression, Map<String, Object> data){
-//    Object result=MVEL.eval(expression, data);
-//    return result +" ("+ (result.getClass().getName()) +")";
-//  }
   
   
   private DefaultJS backOrNext(QSession session, String payload, boolean next) throws JsonGenerationException, JsonMappingException, IOException{
