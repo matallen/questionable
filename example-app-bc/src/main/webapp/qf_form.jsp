@@ -93,7 +93,7 @@
         };
         
         function finishCallback(response){
-        	window.location='demo_angular_finish.jsp?sessionId='+response.data.sessionId;
+        	window.location='finish.jsp?sessionId='+response.data.sessionId;
         }
         
         $scope.reset = function() {

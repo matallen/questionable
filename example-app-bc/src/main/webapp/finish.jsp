@@ -30,7 +30,7 @@
     
 	  var app = angular.module('myApp', []);
 	  
-	  var controllerName="<%=com.redhat.sso.wizard.view.FullAccessExampleController.class.getAnnotation(javax.ws.rs.Path.class).value()%>";
+	  var controllerName="<%=com.redhat.sso.wizard.view.SimpleController.class.getAnnotation(javax.ws.rs.Path.class).value()%>";
 	  
 	  app.controller('FormController', ['$scope', '$http', '$parse', 
 	    function($scope, $http) {
