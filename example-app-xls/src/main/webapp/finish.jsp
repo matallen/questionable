@@ -44,10 +44,12 @@
 	      	
 	      	$scope.questions=[];
 	      	$scope.models=[];
+	      	
+	      	// Amalgamate all the questions/answers in a single page summary
 	      	for(i=0;i<response.data.length-1;i++){
 	      		if (null!=response.data[i].questions){
 	      			for(q=0;q<response.data[i].questions.length-1;q++){
-			      		console.log("Q="+JSON.stringify(response.data[i].questions[q]));
+			      		//console.log("Q="+JSON.stringify(response.data[i].questions[q]));
 			      		$scope.questions.push(response.data[i].questions[q]);
 			      		$scope.models.push(response.data[i].questions[q]);
 	      			}

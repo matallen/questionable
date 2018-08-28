@@ -290,6 +290,9 @@ public class DefaultController implements Controller{
   }
   
   public Object result(QSession session) throws IOException {
+    
+    //TODO: It may be nicer to create a new map and set only question id, title and value to remove all the "structual" aspects of asking the questions rather than just displaying the information
+    
     return session.getGroups().values();
 //    Map<String, Map<String, Object>> result=new HashMap<String, Map<String, Object>>();
 //    for(Entry<String, Group> e:session.getGroups().entrySet()){
