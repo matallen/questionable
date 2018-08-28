@@ -42,6 +42,11 @@ public class FluentRulesService{
   public FluentRulesService withReleaseId(String groupId, String artifactId, String version){
     releaseId=KieServices.Factory.get().newReleaseId(groupId, artifactId, version); return this;
   }
+  public FluentRulesService withReleaseId(String gav){
+    String[] split=gav.split(":");
+    if (split.length!=3) throw new RuntimeException("gav's MUSt be in the format \"group:artifact:version\"");
+    releaseId=KieServices.Factory.get().newReleaseId(split[0], split[1], split[2]); return this;
+  }
 
   public FluentRulesService withClassPathResource(String path){
     this.resourcePath=path; return this;

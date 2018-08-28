@@ -63,14 +63,17 @@ public class SimpleController extends AngularController{
     
 //    if (fact!=null && fact.getValue()==null) fact.setValue(0); //default
     
-    Double result=0d;
+    System.out.println("'kie.maven.settings.custom' is "+System.getProperty("kie.maven.settings.custom"));
+    
     if (loanInterestRateRulesService==null){
-      result=new FluentRulesService()
-      .withReleaseId("com.myteam","loan-interest-rate","LATEST")
+      Double result=new FluentRulesService()
+      .withReleaseId("com.myteam:loan-interest-rate:LATEST")
       .withRuleLoggingAgendaListener()
       .execute(fact)
       .getResult(Double.class);
+      return Response.status(200).entity(Json.newObjectMapper(true).writeValueAsString(result/100)).build();
+    }else{
+      return Response.status(500).build();
     }
-    return Response.status(200).entity(Json.newObjectMapper(true).writeValueAsString(result/100)).build();
   }
 }
