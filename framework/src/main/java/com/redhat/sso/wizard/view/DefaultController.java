@@ -56,7 +56,6 @@ public class DefaultController implements Controller{
   }
   
   //Overridable
-//  protected BusinessCentralQuestionReader businessCentralQuestionReader;
   public QuestionReader createQuestionReader(){
     log.debug("createQuestionReader() called");
     log.debug("classname = "+getClass().getSimpleName());
@@ -118,11 +117,8 @@ public class DefaultController implements Controller{
     getSessionManager().saveSession(session);
   }
   
-  /*private*/ public QuestionReader getQuestionReader(){
+  public QuestionReader getQuestionReader(){
     if (null==questionReader) questionReader=createQuestionReader();
-//    if (BusinessCentralQuestionReader.class.isAssignableFrom(questionReader.getClass())){ // then persist it so it can monitor the rule updates from the server
-//      businessCentralQuestionReader=(BusinessCentralQuestionReader)questionReader;
-//    }
     log.debug("Initialized QuestionReader: "+questionReader.getClass().getSimpleName() +" - from class "+this.getClass().getSimpleName());
     return questionReader;
   }
@@ -288,26 +284,22 @@ public class DefaultController implements Controller{
   @GET
   @Path("/pages/result")
   public Response result(@Context HttpServletRequest request) throws JsonGenerationException, JsonMappingException, IOException{
-    log.debug("Finish:: Called");
+    log.debug("Result:: Called");
     String sessionId=request.getParameter("sessionId");
     if (null==sessionId) return Response.status(500).entity("No SessionId parameter provided").build();
     QSession session=getSession(sessionId);
     if (session==null) return Response.status(500).entity("Unable to find existing session for Id: "+sessionId).build();
     
     ObjectMapper mapper = Json.newObjectMapper(true);
-    
-//    System.out.println("pages/result::groups2="+mapper.writeValueAsString(result(session)));
-    
     String result = mapper.writeValueAsString(result(session));
     
-//    String result=Json.newObjectMapper(true).writeValueAsString(result(session));
-    log.debug("Finish:: Returning -> "+result);
+    log.debug("Result:: Returning -> "+result);
     return Response.status(200).entity(result).build();
   }
   
   public Object result(QSession session) throws IOException {
     
-    //TODO: It may be nicer to create a new map and set only question id, title and value to remove all the "structual" aspects of asking the questions rather than just displaying the information
+    //TODO: It may be nicer to create a new map and set only question id, title and value to remove all the "structural" aspects of asking the questions rather than just displaying the information
     
     return session.getGroups().values();
 //    Map<String, Map<String, Object>> result=new HashMap<String, Map<String, Object>>();

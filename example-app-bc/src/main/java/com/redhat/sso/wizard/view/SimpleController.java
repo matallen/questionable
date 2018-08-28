@@ -10,14 +10,10 @@ import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
-import org.kie.api.KieServices;
-import org.kie.api.builder.ReleaseId;
 
 import com.redhat.sso.wizard.domain.Question;
 import com.redhat.sso.wizard.impl.BusinessCentralQuestionReader;
 import com.redhat.sso.wizard.impl.QSession;
-import com.redhat.sso.wizard.impl.QuestionReaderConfig;
-import com.redhat.sso.wizard.impl.QuestionReaderConfig.Type;
 import com.redhat.sso.wizard.session.EhCacheSessionManager;
 import com.redhat.sso.wizard.session.SessionManager;
 import com.redhat.sso.wizard.utils.FluentRulesService;
@@ -56,16 +52,7 @@ public class SimpleController extends AngularController{
     
     String questionId=request.getParameter("id");
     String controlType=request.getParameter("type");
-//    String fact=request.getParameter("fact");
-    
     Question fact=session.getQuestion(questionId);
-    
-    System.out.println("fact = "+ fact);
-//    Question fact=session.getQuestion("Age");
-    
-//    if (fact!=null && fact.getValue()==null) fact.setValue(0); //default
-    
-    System.out.println("'kie.maven.settings.custom' is "+System.getProperty("kie.maven.settings.custom"));
     
     if (loanInterestRateRulesService==null){
       Double result=new FluentRulesService()
@@ -73,9 +60,6 @@ public class SimpleController extends AngularController{
       .withRuleLoggingAgendaListener()
       .execute(fact)
       .getResult(Double.class);
-      
-      System.out.println("result = "+result);
-      
       return Response.status(200).entity(Json.newObjectMapper(true).writeValueAsString(result/100)).build();
     }else{
       return Response.status(500).build();
