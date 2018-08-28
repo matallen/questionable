@@ -24,6 +24,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.kie.api.KieServices;
+import org.kie.api.builder.ReleaseId;
 import org.mvel2.MVEL;
 
 import com.redhat.sso.wizard.domain.DefaultJS;
@@ -55,7 +56,7 @@ public class DefaultController implements Controller{
   }
   
   //Overridable
-  private BusinessCentralQuestionReader businessCentralQuestionReader;
+//  protected BusinessCentralQuestionReader businessCentralQuestionReader;
   public QuestionReader createQuestionReader(){
     log.debug("createQuestionReader() called");
     log.debug("classname = "+getClass().getSimpleName());
@@ -72,9 +73,9 @@ public class DefaultController implements Controller{
         }
         String[] releaseId=annotation.gav().split(":");
         log.debug("QuestionReader annotation specified type 'BusinessCentral' using releaseId of "+annotation.gav());
-        businessCentralQuestionReader=new BusinessCentralQuestionReader(KieServices.Factory.get()
+        questionReader=new BusinessCentralQuestionReader(KieServices.Factory.get()
             .newReleaseId(releaseId[0], releaseId[1], releaseId[2]), annotation.interval());
-        return businessCentralQuestionReader;
+        return questionReader;
       }else{
         // classpath
         log.debug("QuestionReaderConfig annotation specified type 'ClassPath' of "+annotation.path() +", and worksheet name '"+annotation.worksheetName()+"'");
@@ -93,6 +94,18 @@ public class DefaultController implements Controller{
     return true;
   }
   
+  public ReleaseId getReleaseId(String defaultGAVIfNotFound){
+    String[] releaseIdParts;
+    if (null!=System.getenv("QUESTIONS_GAV_OVERRIDE") && validateGavString(System.getenv("QUESTIONS_GAV_OVERRIDE"))){
+      releaseIdParts=System.getenv("QUESTIONS_GAV_OVERRIDE").split(":");
+    }else if (validateGavString(defaultGAVIfNotFound)){
+      releaseIdParts=defaultGAVIfNotFound.split(":");
+    }else{
+      throw new RuntimeException("Release Id MUST be in the format \"group:artifact:version\"");
+    }
+    return KieServices.Factory.get().newReleaseId(releaseIdParts[0], releaseIdParts[1], releaseIdParts[2]);
+  }
+  
   /*private*/ public SessionManager getSessionManager(){
     if (sessionManager==null) sessionManager=createSessionManager();
     return sessionManager;
@@ -107,6 +120,9 @@ public class DefaultController implements Controller{
   
   /*private*/ public QuestionReader getQuestionReader(){
     if (null==questionReader) questionReader=createQuestionReader();
+//    if (BusinessCentralQuestionReader.class.isAssignableFrom(questionReader.getClass())){ // then persist it so it can monitor the rule updates from the server
+//      businessCentralQuestionReader=(BusinessCentralQuestionReader)questionReader;
+//    }
     log.debug("Initialized QuestionReader: "+questionReader.getClass().getSimpleName() +" - from class "+this.getClass().getSimpleName());
     return questionReader;
   }

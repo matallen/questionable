@@ -11,6 +11,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.kie.api.KieServices;
+import org.kie.api.builder.ReleaseId;
 
 import com.redhat.sso.wizard.domain.Question;
 import com.redhat.sso.wizard.impl.BusinessCentralQuestionReader;
@@ -33,23 +34,13 @@ public class SimpleController extends AngularController{
     return new EhCacheSessionManager();
   }
   
+
   // ######################
   // ## Define the rules ##
   // ######################
-  private BusinessCentralQuestionReader businessCentralQuestionReader;
   @Override
   public QuestionReader createQuestionReader(){
-    String[] releaseId;
-    
-    if (null!=System.getenv("QUESTIONS_GAV_OVERRIDE") && validateGavString(System.getenv("QUESTIONS_GAV_OVERRIDE"))){
-      releaseId=System.getenv("QUESTIONS_GAV_OVERRIDE").split(":");
-    }else{
-      releaseId="com.myteam:questions:LATEST".split(":");
-    }
-    
-    businessCentralQuestionReader=new BusinessCentralQuestionReader(KieServices.Factory.get()
-        .newReleaseId(releaseId[0], releaseId[1], releaseId[2]), 10000l);
-    return businessCentralQuestionReader;
+    return new BusinessCentralQuestionReader(getReleaseId("com.myteam:questions:LATEST"), 10000l);
   }
   
   
@@ -63,9 +54,14 @@ public class SimpleController extends AngularController{
     String sessionId=request.getParameter("sessionId");
     QSession session=getSession(sessionId);
     
-    Question fact=session.getQuestion("Age");
+    String questionId=request.getParameter("id");
+    String controlType=request.getParameter("type");
+    String fact=request.getParameter("fact");
     
-    if (fact.getValue()==null) fact.setValue(0); //default
+    System.out.println("fact = "+ fact);
+//    Question fact=session.getQuestion("Age");
+    
+//    if (fact!=null && fact.getValue()==null) fact.setValue(0); //default
     
     Double result=0d;
     if (loanInterestRateRulesService==null){
