@@ -56,7 +56,9 @@ public class SimpleController extends AngularController{
     
     String questionId=request.getParameter("id");
     String controlType=request.getParameter("type");
-    String fact=request.getParameter("fact");
+//    String fact=request.getParameter("fact");
+    
+    Question fact=session.getQuestion(questionId);
     
     System.out.println("fact = "+ fact);
 //    Question fact=session.getQuestion("Age");
@@ -71,6 +73,9 @@ public class SimpleController extends AngularController{
       .withRuleLoggingAgendaListener()
       .execute(fact)
       .getResult(Double.class);
+      
+      System.out.println("result = "+result);
+      
       return Response.status(200).entity(Json.newObjectMapper(true).writeValueAsString(result/100)).build();
     }else{
       return Response.status(500).build();
