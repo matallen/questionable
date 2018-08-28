@@ -43,15 +43,14 @@
 	      	$scope.data = response.data;
 	      	
 	      	$scope.questions=[];
-	      	$scope.models=[];
+	      	$scope.models={};
 	      	
 	      	// Amalgamate all the questions/answers in a single page summary
 	      	for(i=0;i<response.data.length-1;i++){
 	      		if (null!=response.data[i].questions){
 	      			for(q=0;q<response.data[i].questions.length-1;q++){
-			      		//console.log("Q="+JSON.stringify(response.data[i].questions[q]));
 			      		$scope.questions.push(response.data[i].questions[q]);
-			      		$scope.models.push(response.data[i].questions[q]);
+			      		$scope.models[response.data[i].questions[q]['id']]=response.data[i].questions[q]['value'];
 	      			}
 	      		}
 	      	}
@@ -83,3 +82,23 @@
 		
 	</body>
 </html>
+
+
+<!--
+		  	<table>
+		  		<tr>
+		        <td class="half">
+		          <div class="container">
+		            <div class="header">Debug</div>
+		            <div class="questionsx">
+		            	<div><b>SessionID:</b> <span id="">{{ sessionId }}</span></div>
+							    <pre>models   = {{models | json}}</pre>
+							    <pre>questions   = {{questions | json}}</pre>
+							    <pre>master = {{master | json}}</pre>
+		            </div>
+		          </div>
+		        </td>
+		  		</tr>
+	  		</div>
+	  	</table>
+-->

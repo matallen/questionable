@@ -2,7 +2,10 @@ package com.redhat.sso.wizard.view;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedMap;
@@ -301,17 +304,25 @@ public class DefaultController implements Controller{
     
     //TODO: It may be nicer to create a new map and set only question id, title and value to remove all the "structural" aspects of asking the questions rather than just displaying the information
     
-    return session.getGroups().values();
-//    Map<String, Map<String, Object>> result=new HashMap<String, Map<String, Object>>();
-//    for(Entry<String, Group> e:session.getGroups().entrySet()){
-//      if (!result.containsKey(e.getKey())) result.put(e.getKey(), new HashMap<String, Object>());
-//      for(Question q:e.getValue().getQuestions()){
-//        // don't output in the results json if there is no value, just for cleanliness/brevity
-//        if (q.getValue()!=null)
-//          result.get(e.getKey()).put(q.getTitle(), q.getValue());
-//      }
-//    }
-//    return result;
+    List<Map<String,Object>> groups=new ArrayList<Map<String,Object>>();
+    for(Group g:session.getGroups().values()){
+      Map<String,Object> group=new HashMap<String, Object>();
+      group.put("name", g.getName());
+      List<Map<String,Object>> questions=new ArrayList<Map<String,Object>>();
+      for(Question q:g.getQuestions()){
+        Map<String,Object> question=new HashMap<String, Object>();
+        question.put("group", g.getName());
+        question.put("id",    q.getId());
+        question.put("type",  q.getType());
+        question.put("title", q.getTitle());
+        question.put("value", q.getValue());
+        questions.add(question);
+      }
+      group.put("questions", questions);
+      groups.add(group);
+    }
+    
+    return groups;
   }
 
   
