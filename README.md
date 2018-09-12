@@ -28,7 +28,7 @@ Please see this [Read.ME](https://github.com/matallen/questionable/blob/master/e
  * finally, set the "Do you need a mortgage" to true and click next
  * you can show the "mortgage offer page" which demonstrates the "Your Interest rate will be" field which is a custom calculated field
 * Next show changing questions configuration
- * Checkout the [source code for the demo project](https://gogs-dynamic-questionnaire.apps.d2.casl.rht-labs.com/rmurhamm/dynamic-questionnaire) (username: rmurhamm/Password123), and edit some of the questions in the file src/main/resources/questions.xls
+ * Checkout the source code for this demo project
  * check those changes back in using git commands (git add, git commit, then git push)
  * a build should automatically trigger, just [check the "demo" build and deployment status here if necessary](https://console.d2.casl.rht-labs.com/console/project/dynamic-questionnaire/overview)
  * return to your [demo page and refresh](http://dynamic-wizard-app-questionable2.apps.d1.casl.rht-labs.com/dynamic-wizard-example-app-xls) to see your question changes take effect
