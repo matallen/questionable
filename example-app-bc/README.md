@@ -1,21 +1,3 @@
-<h1>Dynamic Questionnaire Framework</h1>
-
-
-
-
-
-<h2>Why use this framework?</h2>
-
-<h2>Benefits for business users</h2>
-
-<ul>
-	<li>Quick to use and develop new questionnaires</li>
-	<li>Easy to change questions & pages</li>
-	<li>All changes are versionable</li>
-	<li>Will become more stable and featureful with uptake</li>
-	<li></li>
-</ul>
-
 
 <h2>How to use the framework</h2>
 

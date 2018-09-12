@@ -4,19 +4,6 @@
 Please see this [Read.ME](https://github.com/matallen/questionable/blob/master/example-app-bc/README.md) for how to use the framework 
 
 
-# Presentation
-[https://docs.google.com/presentation/d/1Pv2fRPEZnfCl7VaO8gFogSROtxtIHwKwkG6NX2nZq2Q](https://docs.google.com/presentation/d/1Pv2fRPEZnfCl7VaO8gFogSROtxtIHwKwkG6NX2nZq2Q)
-
-## Openshift Environment
-[https://console.d1.casl.rht-labs.com/console/project/questionable2](https://console.d1.casl.rht-labs.com/console/project/questionable2)
-
-## Master Source Control
-[https://github.com/matallen/questionable](https://github.com/matallen/questionable)
-
-note: https://gitlab.consulting.redhat.com/mallen/dynamic-wizard-framework is the old location
-
-
-
 # DEMO (Decision Manager Version)
 
 * open browser to the [Business Central-driven Demo App](http://dynamic-wizard-app-questionable2.apps.d1.casl.rht-labs.com/dynamic-wizard-example-app-bc)
